@@ -12,6 +12,10 @@ let etudiants = {
               };
 
 
+///////////////////////////////////////////////////////
+
+window.addEventListener("load", initialiserPage);
+
 // fonction permettant de comparer deux étudiants sur leurs noms puis leurs prénoms (si noms égaux), sur base de leurs matricules
 // ici ne fonctionne pas bien pour les caractères accentués
 function comparerEtudiantsNomsPrenoms(matricule1, matricule2) {
@@ -31,26 +35,32 @@ function comparerEtudiantsNoms(matricule1, matricule2) {
 }
 
 
-// génération d'index
-// un index correspond ici à une liste triée de matricules, avec l'ordre dans lequel on désire parcourir les étudiants
-// avec Object.keys on récupère toutes les propriétés dans un aray, ici les matricules, pour les trier dans l'ordre désiré
-let indexEtudiantsTriesNomsPrenoms = Object.keys(etudiants).sort(comparerEtudiantsNomsPrenoms);
-let indexEtudiantsTriesNoms = Object.keys(etudiants).sort(comparerEtudiantsNoms);
-//alert(indexEtudiantsTriesNomsPrenoms);
-
-
-// Ne pas oublier d'initialiser la string qui contiendra le code html à insérer dans la page
-let lignesHtml = "";
-// for of, on parcourt un array index de matricules
-for (let k of indexEtudiantsTriesNomsPrenoms) { // ou bien : indexEtudiantsTriesNoms
-   lignesHtml += "<tr>" + 
-                    "<td>" + k + "</td>" + 
-                    "<td>" + etudiants[k].nom + "</td>" + 
-                    "<td>" + etudiants[k].prenom + "</td>" + 
-                  "</tr>"; 
+function genererCodeHtmlTableEtudiants(index) {
+  // Ne pas oublier d'initialiser la string qui contiendra le code html à insérer dans la page
+  let lignesHtml = "";
+  // for of, on parcourt un array index de matricules
+  for (let k of index) { // ou bien : indexEtudiantsTriesNoms
+     lignesHtml += "<tr>" + 
+                      "<td>" + k + "</td>" + 
+                      "<td>" + etudiants[k].nom + "</td>" + 
+                      "<td>" + etudiants[k].prenom + "</td>" + 
+                    "</tr>"; 
+  }
+  return lignesHtml;
 }
 
-// On fait bien attention ici à générer dynamiquement tout le code, 
-// avant de l'insérer en une seule fois dans la page (un seul accès au DOM)
-document.getElementById("bodyEtudiants").innerHTML = lignesHtml;
-//alert(lignesHtml);
+function initialiserPage() {
+  
+  // génération d'index
+  // un index correspond ici à une liste triée de matricules, avec l'ordre dans lequel on désire parcourir les étudiants
+  // avec Object.keys on récupère toutes les propriétés dans un aray, ici les matricules, pour les trier dans l'ordre désiré
+  indexEtudiantsTriesNomsPrenoms = Object.keys(etudiants).sort(comparerEtudiantsNomsPrenoms);
+  //indexEtudiantsTriesNoms = Object.keys(etudiants).sort(comparerEtudiantsNoms);
+  
+  // On fait bien attention ici à générer dynamiquement tout le code, 
+  // avant de l'insérer en une seule fois dans la page (un seul accès au DOM)
+  document.getElementById("bodyEtudiants").innerHTML = genererCodeHtmlTableEtudiants(indexEtudiantsTriesNomsPrenoms);
+
+}
+
+
