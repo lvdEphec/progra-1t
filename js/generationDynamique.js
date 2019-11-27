@@ -36,10 +36,8 @@ function comparerEtudiantsNoms(matricule1, matricule2) {
 
 
 function genererCodeHtmlTableEtudiants(index) {
-  // Ne pas oublier d'initialiser la string qui contiendra le code html à insérer dans la page
   let lignesHtml = "";
-  // for of, on parcourt un array index de matricules
-  for (let k of index) { // ou bien : indexEtudiantsTriesNoms
+  for (let k of index) { 
      lignesHtml += "<tr>" + 
                       "<td>" + k + "</td>" + 
                       "<td>" + etudiants[k].nom + "</td>" + 
@@ -51,7 +49,6 @@ function genererCodeHtmlTableEtudiants(index) {
 
 function initialiserPage() {
   
-  // génération d'index
   // un index correspond ici à une liste triée de matricules, avec l'ordre dans lequel on désire parcourir les étudiants
   // avec Object.keys on récupère toutes les propriétés dans un aray, ici les matricules, pour les trier dans l'ordre désiré
   indexEtudiantsTriesNomsPrenoms = Object.keys(etudiants).sort(comparerEtudiantsNomsPrenoms);
